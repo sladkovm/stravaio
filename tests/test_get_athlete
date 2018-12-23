@@ -1,0 +1,27 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: [application/json]
+      Authorization: [Bearer env_secret_token]
+      Content-Type: [application/json]
+      User-Agent: [Swagger-Codegen/1.0.0/python]
+    method: GET
+    uri: https://www.strava.com/api/v3/athlete
+  response:
+    body: {string: '{"message":"Authorization Error","errors":[{"resource":"Athlete","field":"access_token","code":"invalid"}]}'}
+    headers:
+      Cache-Control: [no-cache]
+      Connection: [keep-alive]
+      Content-Type: [application/json; charset=UTF-8]
+      Date: ['Sun, 23 Dec 2018 14:42:15 GMT']
+      Status: [401 Unauthorized]
+      Transfer-Encoding: [chunked]
+      Vary: [Origin]
+      Via: [1.1 linkerd]
+      X-Content-Type-Options: [nosniff]
+      X-FRAME-OPTIONS: [DENY]
+      X-Request-Id: [0a5ff948-21c0-4e55-a5c7-eae020656226]
+      X-XSS-Protection: [1; mode=block]
+    status: {code: 401, message: Unauthorized}
+version: 1

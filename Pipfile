@@ -7,10 +7,12 @@ verify_ssl = true
 ipython = "*"
 pytest = "*"
 python-dotenv = "*"
+vcrpy = "*"
 
 [packages]
 logme = "*"
 swagger-client = {editable = true,git = "https://github.com/sladkovm/strava-swagger-client.git"}
+maya = "*"
 
 [requires]
 python_version = "3.7"
