@@ -2,6 +2,7 @@ import swagger_client
 import maya
 import os
 import json
+import datetime
 
 
 class StravaIO():
@@ -44,3 +45,22 @@ class Athlete():
         f_name = f"activity_{self.api_response.id}.json"
         with open(os.path.join(strava_dir, f_name), 'w') as fp:
             json.dump(self.to_dict(), fp)
+
+
+def convert_datetime_to_iso8601(d):
+    for k, v in d.items():
+        if isinstance(v, dict):
+            convert_datetime_to_iso8601(v)
+        else:
+            if isinstance(v, datetime.datetime):
+                d[k] = maya.parse(v).iso8601()
+    return d
+
+
+class Activity():
+
+    def __init__(self, api_response):
+        self.api_response = api_response
+
+    def to_dict(self):
+        _dict = self.api_response.to_dict()
