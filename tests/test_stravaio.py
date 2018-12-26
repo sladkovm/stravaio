@@ -38,7 +38,11 @@ def test_convert_datetime_to_iso8601():
                 'key21': maya.parse('2018-02-01').datetime()
                 },
             'key12': maya.parse('2018-01-02').datetime()
-            }
+            },
+        'key2': [
+            {'key111': maya.parse('2018-01-03').datetime()},
+            {'key112': maya.parse('2018-01-04').datetime()}
+        ]
         }
     
     res = {
@@ -48,7 +52,11 @@ def test_convert_datetime_to_iso8601():
                 'key21': '2018-02-01T00:00:00Z'
                 },
             'key12': '2018-01-02T00:00:00Z'
-            }
+            },
+        'key2': [
+            {'key111': '2018-01-03T00:00:00Z'},
+            {'key112': '2018-01-04T00:00:00Z'}
+        ]
         }
 
     assert convert_datetime_to_iso8601(_d) == res

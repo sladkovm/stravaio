@@ -5,12 +5,13 @@ from pprint import pprint
 
 client = StravaIO()
 
-# Athlete
+# ## Athlete
 # athlete = client.get_athlete()
 # athlete.store_locally()
-# print(athlete.to_dict())
+# pprint(athlete.to_dict())
 
-# Activity
+## Activity
 activity = client.get_activity_by_id(2033203247)
-
-pprint(activity.to_dict())
+# pprint(activity.api_response.to_dict())
+activity.store_locally()
+# pprint(activity.to_dict())
