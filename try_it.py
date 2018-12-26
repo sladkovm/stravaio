@@ -11,7 +11,9 @@ client = StravaIO()
 # pprint(athlete.to_dict())
 
 ## Activity
-activity = client.get_activity_by_id(2033203247)
-# pprint(activity.api_response.to_dict())
-activity.store_locally()
-# pprint(activity.to_dict())
+# activity = client.get_activity_by_id(2033203247)
+# activity.store_locally()
+
+## Streams
+streams = client.get_activity_streams(2033203247)
+pprint(streams)
