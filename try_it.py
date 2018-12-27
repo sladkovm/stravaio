@@ -13,9 +13,13 @@ client = StravaIO()
 ## Activity
 # activity = client.get_activity_by_id(2033203247)
 # activity.store_locally()
+list_activities = client.get_logged_in_athlete_activities(after='20180101')
+pprint(len(list_activities))
+
+
 
 ## Streams
-streams = client.get_activity_streams(2033203247)
-pprint(streams.athlete_id)
-pprint(streams.activity_id)
-streams.store_locally()
+# streams = client.get_activity_streams(2033203247)
+# pprint(streams.athlete_id)
+# pprint(streams.activity_id)
+# streams.store_locally()
