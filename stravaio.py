@@ -37,6 +37,20 @@ class StravaIO():
         return Activity(self.activities_api.get_activity_by_id(id))
 
     def get_logged_in_athlete_activities(self, after=0, list_activities=None):
+        """List all activities after a given date
+        
+        Parameters
+        ----------
+        after: int, str or datetime object
+            If integer, the time since epoch is assumed
+            If str, the maya.parse() compatible date string is expected e.g. iso8601 or 2018-01-01 or 20180101
+            If datetime, the datetime object is expected
+
+        Returns
+        -------
+        list_activities: list
+            List of SummaryActivity objects
+        """
         if list_activities is None:
             list_activities = []
         if not isinstance(after, int):
