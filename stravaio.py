@@ -36,16 +36,23 @@ class StravaIO():
         """
         return Activity(self.activities_api.get_activity_by_id(id))
 
-    def get_activity_streams(self, id):
+    def get_activity_streams(self, id, athlete_id=None):
         """Get activity streams by ID
         
+        Parameters
+        ----------
+        id: int
+            activity_id
+        athlete_id: int (optional, default=None)
+            athlete_id, if None, the value will be fetched frome the ActivitiesApi
+
         Returns
         -------
         streams: Streams ojbect
         """
         keys = ['time', 'distance', 'latlng', 'altitude', 'velocity_smooth',
         'heartrate', 'cadence', 'watts', 'temp', 'moving', 'grade_smooth']
-        return Streams(self.streams_api.get_activity_streams(id, keys, key_by_type=True), id)
+        return Streams(self.streams_api.get_activity_streams(id, keys, key_by_type=True), id, athlete_id)
 
 
 class Athlete():

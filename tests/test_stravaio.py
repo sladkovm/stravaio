@@ -11,8 +11,10 @@ class TestStravaIO():
     def test_init_stravaio(self):
         client = StravaIO(access_token='very_secret_token')
         assert client.configuration.access_token == 'very_secret_token'
+        assert isinstance(client._api_client, swagger_client.ApiClient)
         assert isinstance(client.athletes_api, swagger_client.AthletesApi)
         assert isinstance(client.activities_api, swagger_client.ActivitiesApi)
+        assert isinstance(client.streams_api, swagger_client.StreamsApi)
 
     def test_init_stravaio_env(self):
         client = StravaIO()
@@ -42,9 +44,7 @@ def test_convert_datetime_to_iso8601():
         'key2': [
             {'key111': maya.parse('2018-01-03').datetime()},
             {'key112': maya.parse('2018-01-04').datetime()}
-        ]
-        }
-    
+        ]}
     res = {
         'key1': 
             {
@@ -56,7 +56,5 @@ def test_convert_datetime_to_iso8601():
         'key2': [
             {'key111': '2018-01-03T00:00:00Z'},
             {'key112': '2018-01-04T00:00:00Z'}
-        ]
-        }
-
+        ]}
     assert convert_datetime_to_iso8601(_d) == res
