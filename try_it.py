@@ -16,4 +16,6 @@ client = StravaIO()
 
 ## Streams
 streams = client.get_activity_streams(2033203247)
-pprint(streams)
+pprint(streams.athlete_id)
+pprint(streams.activity_id)
+streams.store_locally()

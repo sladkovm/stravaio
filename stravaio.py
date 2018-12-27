@@ -3,6 +3,7 @@ import maya
 import os
 import json
 import datetime
+import pandas as pd
 
 
 class StravaIO():
@@ -44,7 +45,7 @@ class StravaIO():
         """
         keys = ['time', 'distance', 'latlng', 'altitude', 'velocity_smooth',
         'heartrate', 'cadence', 'watts', 'temp', 'moving', 'grade_smooth']
-        return self.streams_api.get_activity_streams(id, keys, key_by_type=True)
+        return Streams(self.streams_api.get_activity_streams(id, keys, key_by_type=True), id)
 
 
 class Athlete():
@@ -64,10 +65,7 @@ class Athlete():
         return _dict
 
     def store_locally(self):
-        home_dir = os.path.expanduser('~')
-        strava_dir = os.path.join(home_dir, '.stravadata')
-        if not os.path.exists(strava_dir):
-            os.mkdir(strava_dir)
+        strava_dir = mkdir_stravadata()
         f_name = f"athlete_{self.api_response.id}.json"
         with open(os.path.join(strava_dir, f_name), 'w') as fp:
             json.dump(self.to_dict(), fp)
@@ -75,8 +73,14 @@ class Athlete():
 
 class Activity():
 
-    def __init__(self, api_response):
+    def __init__(self, api_response, client=None):
         self.api_response = api_response
+        self.athlete_id = self.api_response.athlete.id
+        self.id = self.api_response.id
+        if client:
+            self.streams_api = client.streams_api
+        else:
+            client = None
 
     def to_dict(self):
         _dict = self.api_response.to_dict()
@@ -84,10 +88,7 @@ class Activity():
         return _dict
 
     def store_locally(self):
-        home_dir = os.path.expanduser('~')
-        strava_dir = os.path.join(home_dir, '.stravadata')
-        if not os.path.exists(strava_dir):
-            os.mkdir(strava_dir)
+        strava_dir = mkdir_stravadata()
         athlete_id = self.api_response.athlete.id
         activities_dir = os.path.join(strava_dir, f"activities_{athlete_id}")
         if not os.path.exists(activities_dir):
@@ -97,10 +98,18 @@ class Activity():
             json.dump(self.to_dict(), fp)
 
 
+
 class Streams():
 
-    def __init__(self, api_response):
+    def __init__(self, api_response, activity_id, athlete_id = None):
         self.api_response = api_response
+        self.activity_id = activity_id
+        if athlete_id is None:
+            client = StravaIO()
+            _activity = client.get_activity_by_id(activity_id)
+            self.athlete_id = _activity.athlete_id
+        else:
+            self.athlete_id = athlete_id
 
     def to_dict(self):
         _dict = self.api_response.to_dict()
@@ -114,8 +123,14 @@ class Streams():
             r.update({'lng': list(_r[1])}) 
         return r
 
-    def to_parquet(self):
-        pass
+    def store_locally(self):
+        _df = pd.DataFrame(self.to_dict())
+        strava_dir = mkdir_stravadata()
+        streams_dir = os.path.join(strava_dir, f"streams_{self.athlete_id}")
+        if not os.path.exists(streams_dir):
+            os.mkdir(streams_dir)
+        f_name = f"streams_{self.activity_id}.parquet"
+        _df.to_parquet(os.path.join(streams_dir, f_name))
 
 
 def convert_datetime_to_iso8601(d):
@@ -130,3 +145,11 @@ def convert_datetime_to_iso8601(d):
             if isinstance(v, datetime.datetime):
                 d[k] = maya.parse(v).iso8601()
     return d
+
+
+def mkdir_stravadata():
+    home_dir = os.path.expanduser('~')
+    strava_dir = os.path.join(home_dir, '.stravadata')
+    if not os.path.exists(strava_dir):
+        os.mkdir(strava_dir)
+    return strava_dir
