@@ -12,7 +12,10 @@ EMAIL = 'sladkovm@gmail.com'
 AUTHOR = 'Maksym Sladkov'
 # What packages are required for this module to be executed?
 REQUIRED = [
-    'pandas', 'requests', 'maya'
+    'pandas',
+    'requests',
+    'maya',
+    'git+https://github.com/sladkovm/strava-swagger-client.git#egg=strava-swagger-client'
 ]
 
 # The rest you shouldn't have to touch too much :)
@@ -78,7 +81,7 @@ setup(
     url=URL,
     # packages=find_packages(exclude=('tests',)),
     # If your package is a single module, use this instead of 'packages':
-    py_modules=['flyby'],
+    py_modules=['stravaio'],
 
     # entry_points={
     #     'console_scripts': ['mycli=mymodule:cli'],
