@@ -7,3 +7,6 @@ build:
 test_upload:
 	twine upload --repository-url https://test.pypi.org/legacy/ dist/*
 
+upload:
+	twine upload dist/*
+

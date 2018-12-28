@@ -1,9 +1,16 @@
 # stravaio
 Python client for Strava API with a focus on fluent data handling
 
+[![PyPI version](https://badge.fury.io/py/stravaio.svg)](https://badge.fury.io/py/stravaio)
+
 ## Install
 ```bash
-git clone https://github.com/sladkovm/stravaio.git
+pipenv install stravaio
+```
+
+Lates dev version could be installed as:
+```bash
+pipenv install git+https://github.com/sladkovm/stravaio.git#egg=stravaio
 ```
 
 ## Before use
