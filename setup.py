@@ -14,8 +14,7 @@ AUTHOR = 'Maksym Sladkov'
 REQUIRED = [
     'pandas',
     'requests',
-    'maya',
-    'git+https://github.com/sladkovm/strava-swagger-client.git#egg=strava-swagger-client'
+    'maya'
 ]
 
 # The rest you shouldn't have to touch too much :)
@@ -87,6 +86,7 @@ setup(
     #     'console_scripts': ['mycli=mymodule:cli'],
     # },
     install_requires=REQUIRED,
+    dependecy_lings=['git+https://github.com/sladkovm/strava-swagger-client.git#egg=strava-swagger-client']
     include_package_data=True,
     license='MIT',
     classifiers=[
