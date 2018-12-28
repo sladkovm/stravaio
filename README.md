@@ -2,6 +2,7 @@
 Python client for Strava API with a focus on fluent data handling
 
 [![PyPI version](https://badge.fury.io/py/stravaio.svg)](https://badge.fury.io/py/stravaio)
+(https://travis-ci.org/sladkovm/stravaio.svg?branch=master)
 
 ## Install
 ```bash
