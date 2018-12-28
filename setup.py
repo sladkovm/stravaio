@@ -86,7 +86,7 @@ setup(
     #     'console_scripts': ['mycli=mymodule:cli'],
     # },
     install_requires=REQUIRED,
-    dependecy_lings=['git+https://github.com/sladkovm/strava-swagger-client.git#egg=swagger-client'],
+    dependecy_links=['git+https://github.com/sladkovm/strava-swagger-client.git#egg=swagger-client'],
     include_package_data=True,
     license='MIT',
     classifiers=[
