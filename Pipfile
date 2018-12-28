@@ -10,6 +10,7 @@ python-dotenv = "*"
 vcrpy = "*"
 pylint = "*"
 rope = "*"
+twine = "*"
 
 [packages]
 logme = "*"

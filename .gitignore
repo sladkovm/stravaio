@@ -1,3 +1,6 @@
 __pycache__/
 .vscode/
+build/
+dist/
+stravaio.egg-info/
 Pipfile.lock
