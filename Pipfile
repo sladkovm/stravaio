@@ -13,10 +13,11 @@ rope = "*"
 
 [packages]
 logme = "*"
-swagger-client = {editable = true,git = "https://github.com/sladkovm/strava-swagger-client.git"}
 maya = "*"
 pandas = "*"
 pyarrow = "*"
+urllib3 = "*"
+certifi = "*"
 
 [requires]
 python_version = "3.7"

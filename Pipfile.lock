@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "3b9e9f99b32ed2182443894193b67dcfb513187eabc5c20065a9bbc43cc1dac9"
+            "sha256": "17ee17e0efd8f7163a15351ab70bd617540b454ff5e028dae12605c141e12bf2"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -28,6 +28,7 @@
                 "sha256:47f9c83ef4c0c621eaef743f133f09fa8a74a9b75f037e8624f83bd1b6626cb7",
                 "sha256:993f830721089fef441cdfeb4b2c8c9df86f0c63239f06bd025a76a7daddb033"
             ],
+            "index": "pypi",
             "version": "==2018.11.29"
         },
         "click": {
@@ -203,11 +204,6 @@
             ],
             "version": "==0.2.4"
         },
-        "swagger-client": {
-            "editable": true,
-            "git": "https://github.com/sladkovm/strava-swagger-client.git",
-            "ref": "9f311d40d2fb715dcd098e5eaa6b714c5e70853b"
-        },
         "tzlocal": {
             "hashes": [
                 "sha256:4ebeb848845ac898da6519b9b31879cf13b6626f7184c496037b818e238f2c4e"
@@ -219,6 +215,7 @@
                 "sha256:61bf29cada3fc2fbefad4fdf059ea4bd1b4a86d2b6d15e1c7c0b582b9752fe39",
                 "sha256:de9529817c93f27c8ccbfead6985011db27bd0ddfcdb2d86f3f663385c6a9c22"
             ],
+            "index": "pypi",
             "version": "==1.24.1"
         }
     },
@@ -346,11 +343,11 @@
         },
         "more-itertools": {
             "hashes": [
-                "sha256:c187a73da93e7a8acc0001572aebc7e3c69daf7bf6881a2cea10650bd4420092",
-                "sha256:c476b5d3a34e12d40130bc2f935028b5f636df8f372dc2c1c01dc19681b2039e",
-                "sha256:fcbfeaea0be121980e15bc97b3817b5202ca73d0eae185b4550cbfce2a3ebb3d"
+                "sha256:38a936c0a6d98a38bcc2d03fdaaedaba9f412879461dd2ceff8d37564d6522e4",
+                "sha256:c0a5785b1109a6bd7fac76d6837fd1feca158e54e521ccd2ae8bfe393cc9d4fc",
+                "sha256:fe7a7cae1ccb57d33952113ff4fa1bc5f879963600ed74918f1236e212ee50b9"
             ],
-            "version": "==4.3.0"
+            "version": "==5.0.0"
         },
         "multidict": {
             "hashes": [
