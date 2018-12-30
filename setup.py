@@ -16,7 +16,8 @@ REQUIRED = [
     'requests',
     'maya',
     'urllib3',
-    'certifi'
+    'certifi',
+    'pyarrow'
 ]
 
 # The rest you shouldn't have to touch too much :)

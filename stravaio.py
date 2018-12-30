@@ -4,6 +4,7 @@ import os
 import json
 import datetime
 import pandas as pd
+import glob
 
 
 class StravaIO():
@@ -18,7 +19,7 @@ class StravaIO():
         self.activities_api = swagger_client.ActivitiesApi(self._api_client)
         self.streams_api = swagger_client.StreamsApi(self._api_client)
 
-    def get_athlete(self):
+    def get_logged_in_athlete(self):
         """Get logged in athlete
         
         Returns
@@ -26,6 +27,18 @@ class StravaIO():
         athlete: Athlete object
         """
         return Athlete(self.athletes_api.get_logged_in_athlete())
+
+    def local_athletes(self):
+        """List local athletes
+        
+        Returns
+        -------
+        athletes: generator of JSON friendly dicts
+        """
+        for f_name in glob.glob(os.path.join(dir_stravadata(), 'athlete*.json')):
+            with open(f_name) as f:
+                yield json.load(f)
+
 
     def get_activity_by_id(self, id):
         """Get activity by ID
@@ -67,6 +80,24 @@ class StravaIO():
             print("empty list")
         return list_activities
 
+
+    def local_activities(self, athlete_id):
+        """List local activities
+        
+        Parameters
+        ----------
+        athlete_id: int
+
+        Returns
+        -------
+        activities: generator of JSON friendly dicts
+        """
+        dir_activities = os.path.join(dir_stravadata(), f"activities_{athlete_id}")
+        for f_name in glob.glob(os.path.join(dir_activities, '*.json')):
+            with open(f_name) as f:
+                yield json.load(f)
+
+
     def get_activity_streams(self, id, athlete_id=None):
         """Get activity streams by ID
         
@@ -83,7 +114,8 @@ class StravaIO():
         """
         keys = ['time', 'distance', 'latlng', 'altitude', 'velocity_smooth',
         'heartrate', 'cadence', 'watts', 'temp', 'moving', 'grade_smooth']
-        return Streams(self.streams_api.get_activity_streams(id, keys, key_by_type=True), id, athlete_id)
+        api_response = self.streams_api.get_activity_streams(id, keys, key_by_type=True)
+        return Streams(api_response, id, athlete_id)
 
 
 class Athlete():
@@ -103,7 +135,7 @@ class Athlete():
         return _dict
 
     def store_locally(self):
-        strava_dir = mkdir_stravadata()
+        strava_dir = dir_stravadata()
         f_name = f"athlete_{self.api_response.id}.json"
         with open(os.path.join(strava_dir, f_name), 'w') as fp:
             json.dump(self.to_dict(), fp)
@@ -126,7 +158,7 @@ class Activity():
         return _dict
 
     def store_locally(self):
-        strava_dir = mkdir_stravadata()
+        strava_dir = dir_stravadata()
         athlete_id = self.api_response.athlete.id
         activities_dir = os.path.join(strava_dir, f"activities_{athlete_id}")
         if not os.path.exists(activities_dir):
@@ -139,15 +171,10 @@ class Activity():
 
 class Streams():
 
-    def __init__(self, api_response, activity_id, athlete_id = None):
+    def __init__(self, api_response, activity_id, athlete_id):
         self.api_response = api_response
         self.activity_id = activity_id
-        if athlete_id is None:
-            client = StravaIO()
-            _activity = client.get_activity_by_id(activity_id)
-            self.athlete_id = _activity.athlete_id
-        else:
-            self.athlete_id = athlete_id
+        self.athlete_id = athlete_id
 
     def to_dict(self):
         _dict = self.api_response.to_dict()
@@ -163,7 +190,7 @@ class Streams():
 
     def store_locally(self):
         _df = pd.DataFrame(self.to_dict())
-        strava_dir = mkdir_stravadata()
+        strava_dir = dir_stravadata()
         streams_dir = os.path.join(strava_dir, f"streams_{self.athlete_id}")
         if not os.path.exists(streams_dir):
             os.mkdir(streams_dir)
@@ -185,7 +212,7 @@ def convert_datetime_to_iso8601(d):
     return d
 
 
-def mkdir_stravadata():
+def dir_stravadata():
     home_dir = os.path.expanduser('~')
     strava_dir = os.path.join(home_dir, '.stravadata')
     if not os.path.exists(strava_dir):

@@ -46,7 +46,12 @@ athlete_dict = athlete.to_dict()
 
 # Store athlete infor as a JSON locally (~/.stravadata/athlete_<id>.json)
 athlete.store_locally()
+
+# Get locally stored athletes (returns a generator of dicts)
+local_athletes = client.local_athletes()
 ```
+
+
 
 ### Activities
 ```python
@@ -69,6 +74,9 @@ list_activities = client.get_logged_in_athlete_activities(after='last week')
 for a in list_activities:
     activity = client.get_activity_by_id(a.id)
     activity.store_locally()
+
+# List local activities (returns a generator of JSON friendly dicts)
+activities = client.local_activitis(athlete_id=1202065)
 ```
 
 ### Streams
