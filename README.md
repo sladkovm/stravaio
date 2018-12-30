@@ -88,7 +88,7 @@ streams = client.get_activity_streams(2033203247)
 # Dump streams into a JSON friendly dict
 streams_dict = streams.to_dict()
 
-# Store streams locally (~/.stravadata/streams_<athlete_id>/streams_<id>.json) as a .parquet file, that can be loaded later using the
+# Store streams locally (~/.stravadata/streams_<athlete_id>/streams_<id>.parquet) as a .parquet file, that can be loaded later using the
 # pandas.read_parquet()
 streams.store_locally()
 

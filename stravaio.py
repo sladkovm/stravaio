@@ -180,7 +180,8 @@ class Streams():
         _dict = self.api_response.to_dict()
         r = {}
         for k, v in _dict.items():
-            r.update({k: v['data']})
+            if v is not None:
+                r.update({k: v['data']})
         if r.get('latlng', None):
             latlng = r.pop('latlng')
             _r = list(zip(*latlng))
