@@ -98,20 +98,44 @@ class StravaIO():
                 yield json.load(f)
 
 
-    def get_activity_streams(self, id, athlete_id=None):
+    def local_streams(self, athlete_id):
+        """List local streams
+        
+        Parameters
+        ----------
+        athlete_id: int
+
+        Returns
+        -------
+        streams: generator of dataframes
+        """
+        dir_streams = os.path.join(dir_stravadata(), f"streams_{athlete_id}")
+        for f_name in glob.glob(os.path.join(dir_streams, '*.parquet')):
+            yield pd.read_parquet(f_name)
+
+
+    def get_activity_streams(self, id, athlete_id, local=True):
         """Get activity streams by ID
         
         Parameters
         ----------
         id: int
             activity_id
-        athlete_id: int (optional, default=None)
-            athlete_id, if None, the value will be fetched frome the ActivitiesApi
+        athlete_id: int
+            athlete_id
+        local: bool (default=True)
+            if the streams is already storred, return the local version
 
         Returns
         -------
-        streams: Streams ojbect
+        streams: Streams ojbect (remote) or pd.Dataframe (local)
         """
+        if local:
+            dir_streams = os.path.join(dir_stravadata(), f"streams_{athlete_id}")
+            f_name = f"streams_{id}.parquet"
+            f_path = os.path.join(dir_streams, f_name)
+            if f_path in glob.glob(f_path):
+                return pd.read_parquet(f_path)
         keys = ['time', 'distance', 'latlng', 'altitude', 'velocity_smooth',
         'heartrate', 'cadence', 'watts', 'temp', 'moving', 'grade_smooth']
         api_response = self.streams_api.get_activity_streams(id, keys, key_by_type=True)
