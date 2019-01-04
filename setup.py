@@ -81,7 +81,7 @@ setup(
     author=AUTHOR,
     author_email=EMAIL,
     url=URL,
-    packages=find_packages(exclude=('tests',)),
+    packages=find_packages(exclude=('tests', 'examples',)),
     # If your package is a single module, use this instead of 'packages':
     py_modules=['stravaio'],
 

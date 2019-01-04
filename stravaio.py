@@ -1,10 +1,14 @@
 import swagger_client
+from swagger_client.rest import ApiException
 import maya
 import os
 import json
 import datetime
 import pandas as pd
 import glob
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class StravaIO():
@@ -26,7 +30,19 @@ class StravaIO():
         -------
         athlete: Athlete object
         """
-        return Athlete(self.athletes_api.get_logged_in_athlete())
+
+        try:
+            rv = Athlete(self.athletes_api.get_logged_in_athlete())
+        except ApiException as e:
+            logger.error(f""""
+            Error in strava_swagger_client.AthletesApi! 
+            STRAVA_ACCESS_TOKEN is likely out of date!
+            Check the https://github.com/sladkovm/strava-oauth for help.
+            Returning None.
+            Original Error:
+            {e}""")
+            rv = None
+        return rv 
 
     def local_athletes(self):
         """List local athletes

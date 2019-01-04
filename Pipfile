@@ -11,6 +11,9 @@ vcrpy = "*"
 pylint = "*"
 rope = "*"
 twine = "*"
+jupyter = "*"
+plotly = "*"
+stravaio = {editable = true,path = "."}
 
 [packages]
 logme = "*"
