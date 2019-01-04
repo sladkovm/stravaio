@@ -1,8 +1,12 @@
 test: 
 	python -m pytest -v
 
-build:
-	python setup.py sdist bdist_wheel
+clean:
+	python setup.py clean
+
+bbuild:
+	python setup.py clean
+	python setup.py bbuild
 
 test_upload:
 	twine upload --repository-url https://test.pypi.org/legacy/ dist/*
@@ -10,3 +14,5 @@ test_upload:
 upload:
 	twine upload dist/*
 
+release:
+	git push origin --tags
