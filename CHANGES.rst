@@ -12,6 +12,7 @@ New features:
 - Added logging
 - Added access_token error handling
 - Added loading streams locally if exist
+- Added examples with jupyter notebooks
 
 
 0.0.1 (2018-12-28)

@@ -4,12 +4,22 @@ Python client for Strava API with a focus on fluent data handling
 [![PyPI version](https://badge.fury.io/py/stravaio.svg)](https://badge.fury.io/py/stravaio)
 [![Build Status](https://travis-ci.org/sladkovm/stravaio.svg?branch=master)](https://travis-ci.org/sladkovm/stravaio)
 
+## Example
+
+Build your own *Year in Strava* poster [Jupyter notebook](https://github.com/sladkovm/stravaio/blob/master/examples/Year%20in%20Strava%202018.ipynb)
+
 ## Install
 ```bash
 pipenv install stravaio
 ```
 
-Lates dev version could be installed as:
+or
+
+```bash
+pip install stravaio
+```
+
+Latest dev version could be installed as:
 ```bash
 pipenv install git+https://github.com/sladkovm/stravaio.git#egg=stravaio
 ```
@@ -17,7 +27,7 @@ pipenv install git+https://github.com/sladkovm/stravaio.git#egg=stravaio
 ## Before use
 You need `STRAVA_ACCESS_TOKEN` with activity level permissions to make use of this package. Head to the [strava-oauth](https://github.com/sladkovm/strava-oauth) library for help.
 
-When the token is fetched it is handy to store it as a environment variable
+When the token is fetched it is handy to store it as an environment variable. Otherwise it should be passed explicitely to the StravaIO constructor.
 
 ```bash
 export STRAVA_ACCESS_TOKEN=<strava_access_token>
