@@ -4,3 +4,4 @@ build/
 dist/
 stravaio.egg-info/
 Pipfile.lock
+.ipynb_checkpoints
