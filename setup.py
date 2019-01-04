@@ -221,6 +221,6 @@ setup(
         'clean': CleanCommand,
         'bbuild': BuildCommand,
         'upload': UploadCommand,
-        'upload_test': UploadTestCommand,
+        'test_upload': UploadTestCommand,
     },
 )
