@@ -198,6 +198,9 @@ class Activity():
         else:
             client = None
 
+    def __repr__(self):
+        return f"Activity: {self.id}, Date: {self.api_response.start_date}, Name: {self.api_response.name}"
+
     def to_dict(self):
         _dict = self.api_response.to_dict()
         _dict = convert_datetime_to_iso8601(_dict)
