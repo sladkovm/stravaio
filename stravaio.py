@@ -80,8 +80,8 @@ class StravaIO():
         list_activities: list
             List of SummaryActivity objects
         """
-        if list_activities is None:
-            list_activities = []
+        
+        list_activities = []
         after = date_to_epoch(after)
         _fetched = self.activities_api.get_logged_in_athlete_activities(after=after)
         if len(_fetched) > 0:
@@ -92,7 +92,9 @@ class StravaIO():
                 return self.get_logged_in_athlete_activities(after=last_after, list_activities=list_activities)
         else:
             print("empty list")
+        
         return list_activities
+        
 
 
     def local_activities(self, athlete_id):
