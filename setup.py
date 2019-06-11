@@ -13,7 +13,7 @@ AUTHOR = 'Maksym Sladkov'
 # What packages are required for this module to be executed?
 REQUIRED = [
     'pandas',
-    'requests==2.22.0',
+    'urllib3',
     'maya',
     'certifi',
     'pyarrow'
