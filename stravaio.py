@@ -232,7 +232,7 @@ class Streams():
         self.athlete_id = athlete_id
 
     def __repr__(self):
-        return f"""Streams for {self.activity_id}\nKeys: {list(self.to_dict().keys())}\nAccess: obj.key"""
+        return f"""Streams for {self.activity_id}\nKeys: {list(self.to_dict().keys())}\nAccess: obj.key or obj.to_dict() to load into a pd.DataFrame()"""
 
     def to_dict(self):
         _dict = self.api_response.to_dict()
