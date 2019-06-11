@@ -82,9 +82,7 @@ class StravaIO():
         """
         if list_activities is None:
             list_activities = []
-        if not isinstance(after, int):
-            after = maya.parse(after)
-            after = after.epoch
+        after = date_to_epoch(after)
         _fetched = self.activities_api.get_logged_in_athlete_activities(after=after)
         if len(_fetched) > 0:
             print(f"Fetched {len(_fetched)}, the latests is on {_fetched[-1].start_date}")
@@ -259,3 +257,11 @@ def dir_stravadata():
     if not os.path.exists(strava_dir):
         os.mkdir(strava_dir)
     return strava_dir
+
+
+def date_to_epoch(date):
+    """Convert a date to epoch representation"""
+    if not isinstance(date, int):
+        _ = maya.when(date)
+        date = _.epoch
+    return date

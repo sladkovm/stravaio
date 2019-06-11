@@ -1,4 +1,4 @@
-from stravaio import StravaIO, convert_datetime_to_iso8601
+from stravaio import StravaIO, convert_datetime_to_iso8601, date_to_epoch
 import swagger_client
 import pytest
 import vcr
@@ -31,6 +31,18 @@ class TestStravaIO():
         activity_id = 2029804583
         activity = client.get_activity_by_id(activity_id)
         assert activity is not None
+
+
+def test_date_to_epoch_int():
+    assert date_to_epoch(1) == 1
+
+
+def test_date_to_epoch_date_str():
+    assert date_to_epoch('2018-01-01') == 1514764800
+
+
+def test_date_to_epoch_slang_date():
+    assert isinstance(date_to_epoch('last week'), int)
 
 
 def test_convert_datetime_to_iso8601():
