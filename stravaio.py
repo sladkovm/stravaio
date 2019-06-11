@@ -167,6 +167,12 @@ class Athlete():
         """
         self.api_response = api_response
 
+    def __str__(self):
+        return self._stringify()
+
+    def __repr__(self):
+        return self._stringify()
+
     def to_dict(self):
         _dict = self.api_response.to_dict()
         _dict = convert_datetime_to_iso8601(_dict)
@@ -178,6 +184,8 @@ class Athlete():
         with open(os.path.join(strava_dir, f_name), 'w') as fp:
             json.dump(self.to_dict(), fp)
 
+    def _stringify(self):
+        return json.dumps(self.to_dict(), indent=2)
 
 class Activity():
 
