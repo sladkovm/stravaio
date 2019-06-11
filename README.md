@@ -95,6 +95,9 @@ activities = client.local_activitis(athlete_id=1202065)
 # [Strava StreamSet](https://developers.strava.com/docs/reference/#api-models-StreamSet)
 streams = client.get_activity_streams(2033203247)
 
+# Access streams using the dot notation
+watts = streams.watts
+
 # Dump streams into a JSON friendly dict
 streams_dict = streams.to_dict()
 

@@ -8,6 +8,7 @@ import pandas as pd
 import glob
 import logging
 import datetime
+from __version__ import __version__
 
 logger = logging.getLogger(__name__)
 
