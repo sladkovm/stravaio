@@ -1,6 +1,19 @@
 Changelog
 =========
 
+0.0.3 (2019-06-13)
+------------------
+
+New features:
+
+- access to indivudual streams using class attributes
+- __repr__ functions added to athlete, activity, stream class
+
+Bug fixes:
+
+- use of slang language e.g. "last week" in the after attribute
+
+
 0.0.2 (2019-01-04)
 ------------------
 
