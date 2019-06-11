@@ -22,6 +22,7 @@ pandas = "*"
 pyarrow = "*"
 urllib3 = "*"
 certifi = "*"
+loguru = "*"
 
 [requires]
 python_version = "3.6"

@@ -224,13 +224,15 @@ class Activity():
 
 class Streams():
 
+    ACCEPTED_KEYS = ['time', 'distance', 'altitude', 'velocity_smooth', 'heartrate', 'cadence', 'watts', 'temp', 'moving', 'grade_smooth', 'lat', 'lng']
+
     def __init__(self, api_response, activity_id, athlete_id):
         self.api_response = api_response
         self.activity_id = activity_id
         self.athlete_id = athlete_id
 
     def __repr__(self):
-        return f"""Streams for {self.activity_id}\nKeys: {self.to_dict().keys()}\nAccess: obj.to_dict()[key]"""
+        return f"""Streams for {self.activity_id}\nKeys: {list(self.to_dict().keys())}\nAccess: obj.key"""
 
     def to_dict(self):
         _dict = self.api_response.to_dict()
@@ -253,6 +255,66 @@ class Streams():
             os.mkdir(streams_dir)
         f_name = f"streams_{self.activity_id}.parquet"
         _df.to_parquet(os.path.join(streams_dir, f_name))
+
+    @property
+    def time(self):
+        return self._get_stream_by_name('time')
+
+    @property
+    def distance(self):
+        return self._get_stream_by_name('distance')
+
+    @property
+    def altitude(self):
+        return self._get_stream_by_name('altitude')
+
+    @property
+    def velocity_smooth(self):
+        return self._get_stream_by_name('velocity_smooth')
+
+    @property
+    def heartrate(self):
+        return self._get_stream_by_name('heartrate')
+
+    @property
+    def cadence(self):
+        return self._get_stream_by_name('cadence')
+
+    @property
+    def watts(self):
+        return self._get_stream_by_name('watts')
+
+    @property
+    def grade_smooth(self):
+        return self._get_stream_by_name('grade_smooth')
+
+    @property
+    def moving(self):
+        return self._get_stream_by_name('moving')
+    
+    @property
+    def lat(self):
+        return self._get_stream_by_name('lat')
+
+    @property
+    def lng(self):
+        return self._get_stream_by_name('lng')
+
+
+    def _get_stream_by_name(self, key):
+        
+        if key not in self.ACCEPTED_KEYS:
+            raise KeyError(f"key must be one of {self.ACCEPTED_KEYS}")
+        
+        try:
+            rv = self.to_dict()[key]
+        except KeyError:
+            logger.warning(f"Stream does not contain {key}")
+            rv = None
+        return rv
+
+
+
 
 
 def convert_datetime_to_iso8601(d):
