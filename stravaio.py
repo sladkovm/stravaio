@@ -169,6 +169,7 @@ class Athlete():
             e.g. athletes_api.get_logged_in_athlete()
         """
         self.api_response = api_response
+        self.id = self.api_response.id
 
     def __str__(self):
         return self._stringify()
@@ -227,6 +228,9 @@ class Streams():
         self.api_response = api_response
         self.activity_id = activity_id
         self.athlete_id = athlete_id
+
+    def __repr__(self):
+        return f"""Streams for {self.activity_id}\nKeys: {self.to_dict().keys()}\nAccess: obj.to_dict()[key]"""
 
     def to_dict(self):
         _dict = self.api_response.to_dict()
