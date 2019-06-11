@@ -1,11 +1,10 @@
 from stravaio import StravaIO, convert_datetime_to_iso8601, date_to_epoch
 import swagger_client
 import pytest
-import vcr
 import os
 import maya
 import datetime
-
+    
 
 class TestStravaIO():
 

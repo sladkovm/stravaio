@@ -1,6 +1,14 @@
 Changelog
 =========
 
+0.0.6 (2019-06-13)
+------------------
+
+New features:
+
+- removed __version__ from the stravaio
+
+
 0.0.5 (2019-06-13)
 ------------------
 
