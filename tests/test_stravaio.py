@@ -4,6 +4,7 @@ import pytest
 import vcr
 import os
 import maya
+import datetime
 
 
 class TestStravaIO():
@@ -43,6 +44,10 @@ def test_date_to_epoch_date_str():
 
 def test_date_to_epoch_slang_date():
     assert isinstance(date_to_epoch('last week'), int)
+
+
+def test_date_to_epoch_datetime():
+    assert isinstance(date_to_epoch(datetime.datetime(2019, 1, 1)), int)
 
 
 def test_convert_datetime_to_iso8601():

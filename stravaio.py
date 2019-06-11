@@ -7,6 +7,7 @@ import datetime
 import pandas as pd
 import glob
 import logging
+import datetime
 
 logger = logging.getLogger(__name__)
 
@@ -274,7 +275,15 @@ def dir_stravadata():
 
 def date_to_epoch(date):
     """Convert a date to epoch representation"""
-    if not isinstance(date, int):
+    rv = None
+    if isinstance(date, int):
+        rv = date
+    if isinstance(date, datetime.datetime):
+        _ = maya.parse(date)
+        rv = _.epoch
+    if isinstance(date, str):
         _ = maya.when(date)
-        date = _.epoch
-    return date
+        rv = _.epoch
+    if rv is None:
+        raise TypeError('date must be epoch int, datetime obj or the string')
+    return rv
