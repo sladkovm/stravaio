@@ -1,6 +1,14 @@
 Changelog
 =========
 
+0.0.7 (2019-06-14)
+------------------
+
+New features:
+
+- Added strava_oauth2() for local OAuth2 flow
+
+
 0.0.6 (2019-06-13)
 ------------------
 

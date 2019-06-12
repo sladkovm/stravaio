@@ -25,7 +25,21 @@ pipenv install git+https://github.com/sladkovm/stravaio.git#egg=stravaio
 ```
 
 ## Before use
-You need `STRAVA_ACCESS_TOKEN` with activity level permissions to make use of this package. Head to the [strava-oauth](https://github.com/sladkovm/strava-oauth) library for help.
+You need `STRAVA_ACCESS_TOKEN` with activity level permissions to make use of this package. 
+
+The easiest way to get the token is to use the *stravaio* library itself:
+
+```python
+from stravaio import strava_oauth2
+
+strava_oauth2(client_id=STRAVA_CLIENT_ID, client_secret=STRAVA_CLIENT_SECRET)
+```
+
+You will be redirected to the default system browser, where the authorization flow must be completed. In the background the local webserver will be running and listening to the data returned by Strava.
+
+Both `STRAVA_CLIENT_ID` and `STRAVA_CLIENT_SECRET` are optional arguments if they are set as the environment variables.
+
+Another way is to head to the [strava-oauth](https://github.com/sladkovm/strava-oauth) library for help. There you will find a link to the public webserver that can be used for completing the Strava authorizatio flow.
 
 When the token is fetched it is handy to store it as an environment variable. Otherwise it should be passed explicitely to the StravaIO constructor.
 
