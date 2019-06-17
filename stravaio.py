@@ -9,6 +9,7 @@ import glob
 import datetime
 from loguru import logger
 import requests
+import socket
 import urllib
 import webbrowser
 from http.server import BaseHTTPRequestHandler, HTTPServer
@@ -336,20 +337,25 @@ def strava_oauth2(client_id=None, client_secret=None):
         if client_secret is None:
             raise ValueError('client_secret is None')
     
-    _request_strava_authorize(client_id)
+    port = 8000
+    _request_strava_authorize(client_id, port)
 
-    PORT = 8000
+    logger.info(f"serving at port {port}")
 
-    with Server(("localhost", PORT), HTTPRequestHandler) as httpd:
-        logger.info(f"serving at port {PORT}")
-        httpd.serve_forever(client_id, client_secret)
+    token = run_server_and_wait_for_token(
+        port=port,
+        client_id=client_id,
+        client_secret=client_secret
+    )
+
+    return token
 
 
-def _request_strava_authorize(client_id):
+def _request_strava_authorize(client_id, port):
     params_oauth = {
         "client_id": client_id,
         "response_type": "code",
-        "redirect_uri": "http://localhost:8000/authorization_successful",
+        "redirect_uri": f"http://localhost:{port}/authorization_successful",
         "scope": "read,profile:read_all,activity:read",
         "state": 'https://github.com/sladkovm/strava-http',
         "approval_prompt": "force"
@@ -361,43 +367,47 @@ def _request_strava_authorize(client_id):
     return None
 
 
-class Server(HTTPServer):
-    def serve_forever(self, client_id, client_secret):
-        self.RequestHandlerClass.client_id = client_id
-        self.RequestHandlerClass.client_secret = client_secret
-        HTTPServer.serve_forever(self)
+def run_server_and_wait_for_token(port, client_id, client_secret):
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.bind(('127.0.0.1', port))
+        s.listen()
+        conn, addr = s.accept()
 
+        request_bytes = b''
+        with conn:
+            while True:
+                chunk = conn.recv(512)
+                request_bytes += chunk
 
-class HTTPRequestHandler(BaseHTTPRequestHandler):
-    client_id = None
-    client_secret = None
+                if request_bytes.endswith(b'\r\n\r\n'):
+                    break
+            conn.sendall(b'HTTP/1.1 200 OK\r\n\r\nsuccess\r\n')
 
-    def do_GET(self):
-        url = urllib.parse.urlparse(self.path)
-        logger.debug(f"path: {url.path}")
-        qs = urllib.parse.parse_qs(url.query)
-        logger.debug(f"query strings: {qs}")
+        request = request_bytes.decode('utf-8')
+        status_line = request.split('\n', 1)[0]
+        
+        method, raw_url, protocol_version = status_line.split(' ')
+        
+        url = urllib.parse.urlparse(raw_url)
+        query_string = url.query
+        query_params = urllib.parse.parse_qs(query_string, keep_blank_values=True)
 
         if url.path == "/authorization_successful":
-            code = qs.get('code')[0]
+            code = query_params.get('code')[0]
             logger.debug(f"code: {code}")
             params = {
-                "client_id": self.client_id,
-                "client_secret": self.client_secret,
+                "client_id": client_id,
+                "client_secret": client_secret,
                 "code": code,
                 "grant_type": "authorization_code"
             }
             r = requests.post("https://www.strava.com/oauth/token", params)
-            d = json.loads(r.text)
-            logger.debug(f"Authorized athlete: {d.get('access_token', 'Oeps something went wrong!')}")
-            rv = f"STRAVA_ACCESS_TOKEN={d.get('access_token', 'Oeps something went wrong!')}".encode()
+            data = r.json()
+            logger.debug(f"Authorized athlete: {data.get('access_token', 'Oeps something went wrong!')}")
         else:
-            rv = url.path.encode()
-
-        self.send_response(200)
-        self.send_header('Content-type','text/html')
-        self.end_headers()
-        self.wfile.write(rv)
+            data = url.path.encode()
+        
+        return data
 
 
 def convert_datetime_to_iso8601(d):
