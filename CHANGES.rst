@@ -1,6 +1,13 @@
 Changelog
 =========
 
+0.0.8 (2019-06-19)
+------------------
+
+New features:
+
+- strava_oauth2() returns token inline
+
 0.0.7 (2019-06-14)
 ------------------
 
