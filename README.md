@@ -120,3 +120,7 @@ streams_dict = streams.to_dict()
 streams.store_locally()
 
 ```
+
+## Contributors
+
+[Aart Goossens](https://github.com/AartGoossens)
