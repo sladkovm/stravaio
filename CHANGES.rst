@@ -1,6 +1,13 @@
 Changelog
 =========
 
+0.0.9 (2019-07-15)
+------------------
+
+Bug fixes:
+
+- get_logged_in_athlete_activities() returns appended list
+
 0.0.8 (2019-06-19)
 ------------------
 
