@@ -6,3 +6,4 @@ stravaio.egg-info/
 Pipfile.lock
 .ipynb_checkpoints
 examples/.env
+.pytest_cache/
