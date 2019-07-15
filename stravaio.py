@@ -84,8 +84,8 @@ class StravaIO():
         list_activities: list
             List of SummaryActivity objects
         """
-        
-        list_activities = []
+        if list_activities is None:
+            list_activities = []
         after = date_to_epoch(after)
         _fetched = self.activities_api.get_logged_in_athlete_activities(after=after)
         if len(_fetched) > 0:
