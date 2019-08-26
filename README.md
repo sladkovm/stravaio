@@ -100,7 +100,7 @@ for a in list_activities:
     activity.store_locally()
 
 # List local activities (returns a generator of JSON friendly dicts)
-activities = client.local_activitis(athlete_id=1202065)
+activities = client.local_activities(athlete_id=1202065)
 ```
 
 ### Streams
