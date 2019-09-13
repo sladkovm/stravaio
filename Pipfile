@@ -19,11 +19,10 @@ stravaio = {editable = true,path = "."}
 logme = "*"
 maya = "*"
 pandas = "*"
-pyarrow = "*"
 urllib3 = "*"
 certifi = "*"
 loguru = "*"
 requests = "*"
 
 [requires]
-python_version = "3.6"
+python_version = "3.7"
