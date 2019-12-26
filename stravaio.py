@@ -60,14 +60,21 @@ class StravaIO():
                 yield json.load(f)
 
 
-    def get_activity_by_id(self, id):
+    def get_activity_by_id(self, id, include_all_efforts=False):
         """Get activity by ID
+
+        Parameters
+        ----------
+        id: int
+            activity_id
+        include_all_efforts: bool (default=False)
+            Include all segment efforts in the response
         
         Returns
         -------
         activity: Activity ojbect
         """
-        return Activity(self.activities_api.get_activity_by_id(id))
+        return Activity(self.activities_api.get_activity_by_id(id, include_all_efforts=include_all_efforts))
 
     def get_logged_in_athlete_activities(self, after=0, list_activities=None):
         """List all activities after a given date
