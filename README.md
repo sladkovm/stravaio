@@ -25,7 +25,7 @@ pipenv install git+https://github.com/sladkovm/stravaio.git#egg=stravaio
 ```
 
 ## Before use
-You need `STRAVA_ACCESS_TOKEN` with activity level permissions to make use of this package. 
+You need `STRAVA_ACCESS_TOKEN` with activity level permissions to make use of this package.
 
 The easiest way to get the token is to use the *stravaio* library itself:
 
@@ -35,13 +35,13 @@ from stravaio import strava_oauth2
 strava_oauth2(client_id=STRAVA_CLIENT_ID, client_secret=STRAVA_CLIENT_SECRET)
 ```
 
-You will be redirected to the default system browser, where the authorization flow must be completed. In the background the local webserver will be running and listening to the data returned by Strava.
+You will be redirected to the default system browser, where the authorization flow must be completed. In the background the local web server will be running and listening to the data returned by Strava.
 
 Both `STRAVA_CLIENT_ID` and `STRAVA_CLIENT_SECRET` are optional arguments if they are set as the environment variables.
 
-Another way is to head to the [strava-oauth](https://github.com/sladkovm/strava-oauth) library for help. There you will find a link to the public webserver that can be used for completing the Strava authorizatio flow.
+Another way is to head to the [strava-oauth](https://github.com/sladkovm/strava-oauth) library for help. There you will find a link to the public web server that can be used for completing the Strava authorization flow.
 
-When the token is fetched it is handy to store it as an environment variable. Otherwise it should be passed explicitely to the StravaIO constructor.
+When the token is fetched it is handy to store it as an environment variable. Otherwise it should be passed explicitly to the StravaIO constructor.
 
 ```bash
 export STRAVA_ACCESS_TOKEN=<strava_access_token>
@@ -52,7 +52,7 @@ export STRAVA_ACCESS_TOKEN=<strava_access_token>
 ```python
 from stravaio import StravaIO
 
-# If the token is stored as an environment varible it is not neccessary
+# If the token is stored as an environment variable it is not necessary
 # to pass it as an input parameters
 client = StravaIO(access_token=STRAVA_ACCESS_TOKEN)
 ```
@@ -68,7 +68,7 @@ athlete = client.get_logged_in_athlete()
 # Dump athlete into a JSON friendly dict (e.g. all datetimes are converted into iso8601)
 athlete_dict = athlete.to_dict()
 
-# Store athlete infor as a JSON locally (~/.stravadata/athlete_<id>.json)
+# Store athlete info as a JSON locally (~/.stravadata/athlete_<id>.json)
 athlete.store_locally()
 
 # Get locally stored athletes (returns a generator of dicts)
@@ -79,7 +79,7 @@ local_athletes = client.local_athletes()
 
 ### Activities
 ```python
-# Returns a stravaio.Activity object that wraps the 
+# Returns a stravaio.Activity object that wraps the
 # [Strava DetailedActivity](https://developers.strava.com/docs/reference/#api-models-DetailedActivity)
 activity = client.get_activity_by_id(2033203247)
 
@@ -105,7 +105,7 @@ activities = client.local_activities(athlete_id=1202065)
 
 ### Streams
 ```python
-# Returns a stravaio.Streams object that wraps the 
+# Returns a stravaio.Streams object that wraps the
 # [Strava StreamSet](https://developers.strava.com/docs/reference/#api-models-StreamSet)
 streams = client.get_activity_streams(2033203247)
 
