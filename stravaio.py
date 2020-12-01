@@ -29,7 +29,7 @@ class StravaIO():
 
     def get_logged_in_athlete(self):
         """Get logged in athlete
-        
+
         Returns
         -------
         athlete: Athlete object
@@ -39,18 +39,18 @@ class StravaIO():
             rv = Athlete(self.athletes_api.get_logged_in_athlete())
         except ApiException as e:
             logger.error(f""""
-            Error in strava_swagger_client.AthletesApi! 
+            Error in strava_swagger_client.AthletesApi!
             STRAVA_ACCESS_TOKEN is likely out of date!
             Check the https://github.com/sladkovm/strava-oauth for help.
             Returning None.
             Original Error:
             {e}""")
             rv = None
-        return rv 
+        return rv
 
     def local_athletes(self):
         """List local athletes
-        
+
         Returns
         -------
         athletes: generator of JSON friendly dicts
@@ -69,7 +69,7 @@ class StravaIO():
             activity_id
         include_all_efforts: bool (default=False)
             Include all segment efforts in the response
-        
+
         Returns
         -------
         activity: Activity ojbect
@@ -78,7 +78,7 @@ class StravaIO():
 
     def get_logged_in_athlete_activities(self, after=0, list_activities=None):
         """List all activities after a given date
-        
+
         Parameters
         ----------
         after: int, str or datetime object
@@ -96,21 +96,21 @@ class StravaIO():
         after = date_to_epoch(after)
         _fetched = self.activities_api.get_logged_in_athlete_activities(after=after)
         if len(_fetched) > 0:
-            print(f"Fetched {len(_fetched)}, the latests is on {_fetched[-1].start_date}")
+            print(f"Fetched {len(_fetched)}, the latest is on {_fetched[-1].start_date}")
             list_activities.extend(_fetched)
             if len(_fetched) == 30:
                 last_after = list_activities[-1].start_date
                 return self.get_logged_in_athlete_activities(after=last_after, list_activities=list_activities)
         else:
             print("empty list")
-        
+
         return list_activities
-        
+
 
 
     def local_activities(self, athlete_id):
         """List local activities
-        
+
         Parameters
         ----------
         athlete_id: int
@@ -127,7 +127,7 @@ class StravaIO():
 
     def local_streams(self, athlete_id):
         """List local streams
-        
+
         Parameters
         ----------
         athlete_id: int
@@ -143,7 +143,7 @@ class StravaIO():
 
     def get_activity_streams(self, id, athlete_id, local=True):
         """Get activity streams by ID
-        
+
         Parameters
         ----------
         id: int
@@ -151,11 +151,11 @@ class StravaIO():
         athlete_id: int
             athlete_id
         local: bool (default=True)
-            if the streams is already storred, return the local version
+            if the Streams object is already stored, return the local version
 
         Returns
         -------
-        streams: Streams ojbect (remote) or pd.Dataframe (local)
+        streams: Streams object (remote) or pd.Dataframe (local)
         """
         if local:
             dir_streams = os.path.join(dir_stravadata(), f"streams_{athlete_id}")
@@ -254,7 +254,7 @@ class Streams():
             latlng = r.pop('latlng')
             _r = list(zip(*latlng))
             r.update({'lat': list(_r[0])})
-            r.update({'lng': list(_r[1])}) 
+            r.update({'lng': list(_r[1])})
         return r
 
     def store_locally(self):
@@ -301,7 +301,7 @@ class Streams():
     @property
     def moving(self):
         return self._get_stream_by_name('moving')
-    
+
     @property
     def lat(self):
         return self._get_stream_by_name('lat')
@@ -312,10 +312,10 @@ class Streams():
 
 
     def _get_stream_by_name(self, key):
-        
+
         if key not in self.ACCEPTED_KEYS:
             raise KeyError(f"key must be one of {self.ACCEPTED_KEYS}")
-        
+
         try:
             rv = self.to_dict()[key]
         except KeyError:
@@ -325,15 +325,18 @@ class Streams():
 
 
 def strava_oauth2(client_id=None, client_secret=None):
-    """Run strava authorization flow. This function will open a default system
-    browser alongside starting a local webserver. The authorization procedure will be completed in the browser.
+    """Run strava authorization flow.
 
-    The access token will be returned in the browser in the format ready to copy to the .env file.
-    
+    This function will open a default system browser alongside starting a local
+    web server. The authorization procedure will be completed in the browser.
+
+    The access token will be returned in the browser in the format ready to copy
+    to the .env file.
+
     Parameters:
     -----------
-    client_id: int, if not provided will be retrieved from the STRAVA_CLIENT_ID env viriable
-    client_secret: str, if not provided will be retrieved from the STRAVA_CLIENT_SECRET env viriable
+    client_id: int, if not provided will be retrieved from the STRAVA_CLIENT_ID env variable
+    client_secret: str, if not provided will be retrieved from the STRAVA_CLIENT_SECRET env variable
     """
     if client_id is None:
         client_id = os.getenv('STRAVA_CLIENT_ID', None)
@@ -343,7 +346,7 @@ def strava_oauth2(client_id=None, client_secret=None):
         client_secret = os.getenv('STRAVA_CLIENT_SECRET', None)
         if client_secret is None:
             raise ValueError('client_secret is None')
-    
+
     port = 8000
     _request_strava_authorize(client_id, port)
 
@@ -392,9 +395,9 @@ def run_server_and_wait_for_token(port, client_id, client_secret):
 
         request = request_bytes.decode('utf-8')
         status_line = request.split('\n', 1)[0]
-        
+
         method, raw_url, protocol_version = status_line.split(' ')
-        
+
         url = urllib.parse.urlparse(raw_url)
         query_string = url.query
         query_params = urllib.parse.parse_qs(query_string, keep_blank_values=True)
@@ -413,7 +416,7 @@ def run_server_and_wait_for_token(port, client_id, client_secret):
             logger.debug(f"Authorized athlete: {data.get('access_token', 'Oeps something went wrong!')}")
         else:
             data = url.path.encode()
-        
+
         return data
 
 
