@@ -265,7 +265,7 @@ class ExplorerSegment(object):
     def elev_difference(self):
         """Gets the elev_difference of this ExplorerSegment.  # noqa: E501
 
-        The segments's evelation difference, in meters  # noqa: E501
+        The segments's elevation difference, in meters  # noqa: E501
 
         :return: The elev_difference of this ExplorerSegment.  # noqa: E501
         :rtype: float
@@ -276,7 +276,7 @@ class ExplorerSegment(object):
     def elev_difference(self, elev_difference):
         """Sets the elev_difference of this ExplorerSegment.
 
-        The segments's evelation difference, in meters  # noqa: E501
+        The segments's elevation difference, in meters  # noqa: E501
 
         :param elev_difference: The elev_difference of this ExplorerSegment.  # noqa: E501
         :type: float
