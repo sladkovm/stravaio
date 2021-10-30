@@ -43,7 +43,7 @@ class SegmentsApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param list[float] bounds: The latitude and longitude for two points describing a rectangular boundary for the search: [southwest corner latitutde, southwest corner longitude, northeast corner latitude, northeast corner longitude] (required)
+        :param list[float] bounds: The latitude and longitude for two points describing a rectangular boundary for the search: [southwest corner latitude, southwest corner longitude, northeast corner latitude, northeast corner longitude] (required)
         :param str activity_type: Desired activity type.
         :param int min_cat: The minimum climbing category.
         :param int max_cat: The maximum climbing category.
@@ -68,7 +68,7 @@ class SegmentsApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param list[float] bounds: The latitude and longitude for two points describing a rectangular boundary for the search: [southwest corner latitutde, southwest corner longitude, northeast corner latitude, northeast corner longitude] (required)
+        :param list[float] bounds: The latitude and longitude for two points describing a rectangular boundary for the search: [southwest corner latitude, southwest corner longitude, northeast corner latitude, northeast corner longitude] (required)
         :param str activity_type: Desired activity type.
         :param int min_cat: The minimum climbing category.
         :param int max_cat: The maximum climbing category.

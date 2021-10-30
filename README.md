@@ -41,7 +41,7 @@ Both `STRAVA_CLIENT_ID` and `STRAVA_CLIENT_SECRET` are optional arguments if the
 
 Another way is to head to the [strava-oauth](https://github.com/sladkovm/strava-oauth) library for help. There you will find a link to the public webserver that can be used for completing the Strava authorizatio flow.
 
-When the token is fetched it is handy to store it as an environment variable. Otherwise it should be passed explicitely to the StravaIO constructor.
+When the token is fetched it is handy to store it as an environment variable. Otherwise it should be passed explicitly to the StravaIO constructor.
 
 ```bash
 export STRAVA_ACCESS_TOKEN=<strava_access_token>
@@ -52,7 +52,7 @@ export STRAVA_ACCESS_TOKEN=<strava_access_token>
 ```python
 from stravaio import StravaIO
 
-# If the token is stored as an environment varible it is not neccessary
+# If the token is stored as an environment variable it is not necessary
 # to pass it as an input parameters
 client = StravaIO(access_token=STRAVA_ACCESS_TOKEN)
 ```
