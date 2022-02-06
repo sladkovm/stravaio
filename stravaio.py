@@ -76,7 +76,7 @@ class StravaIO():
         """
         return Activity(self.activities_api.get_activity_by_id(id, include_all_efforts=include_all_efforts))
 
-    def get_logged_in_athlete_activities(self, after=0, list_activities=None):
+    def get_logged_in_athlete_activities(self, after=0, before=0, list_activities=None):
         """List all activities after a given date
         
         Parameters
@@ -85,6 +85,7 @@ class StravaIO():
             If integer, the time since epoch is assumed
             If str, the maya.parse() compatible date string is expected e.g. iso8601 or 2018-01-01 or 20180101
             If datetime, the datetime object is expected
+        before: similar to 'after'
 
         Returns
         -------
@@ -94,7 +95,8 @@ class StravaIO():
         if list_activities is None:
             list_activities = []
         after = date_to_epoch(after)
-        _fetched = self.activities_api.get_logged_in_athlete_activities(after=after)
+        before = date_to_epoch(before)
+        _fetched = self.activities_api.get_logged_in_athlete_activities(after=after, before=before)
         if len(_fetched) > 0:
             print(f"Fetched {len(_fetched)}, the latests is on {_fetched[-1].start_date}")
             list_activities.extend(_fetched)
