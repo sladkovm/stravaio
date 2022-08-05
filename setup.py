@@ -16,7 +16,7 @@ REQUIRED = [
     'urllib3',
     'maya',
     'certifi',
-    'pyarrow==0.14.0',
+    'pyarrow==0.15.1',
     'requests',
     'loguru'
 ]
